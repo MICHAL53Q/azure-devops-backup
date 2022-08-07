@@ -1,0 +1,26 @@
+version: '3'
+services:
+  git-backup:
+    build: .
+    container_name: git-backup
+    environment:
+      # Auth DevOps
+      - DEVOPS_PAT=${DEVOPS_PAT}
+      - DEVOPS_ORGANIZATION_URL=${DEVOPS_ORGANIZATION_URL}
+
+      # Auth SharePoint
+      - SHAREPOINT_URL=${SHAREPOINT_URL}
+      - SHAREPOINT_DIR=${SHAREPOINT_DIR}
+      - SHAREPOINT_CLIENT_ID=${SHAREPOINT_CLIENT_ID}
+      - SHAREPOINT_CLIENT_SECRET=${SHAREPOINT_CLIENT_SECRET}
+      
+      # Paths
+      - PATH_CLONE=/mnt/backup/clone
+      - PATH_ARCHIVE=/mnt/backup/archive
+    volumes:
+      - ./app:/usr/src/app
+      - ./tmp:/mnt/backup
+      - ./tests:/usr/src/tests
+    # stdin_open: true
+    # tty: true
+    # command: tail -f /dev/null
